@@ -10,12 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
   bloc: ^9.2.0
+  flutter_bloc: ^9.1.1
   path_provider: ^2.1.1
   go_router: ^17.0.1
   drift: ^2.30.1
   drift_flutter: ^0.2.8
-  path_provider: ^2.1.5
   dio: ^5.4.0
+  equatable: ^2.0.8
 
 dev_dependencies:
   flutter_test:

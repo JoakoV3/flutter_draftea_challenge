@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_draftea_challenge/router/app_router.dart';
+import 'package:flutter_draftea_challenge/core/router/app_router.dart';
 
 void main() {
   runApp(const MainApp());

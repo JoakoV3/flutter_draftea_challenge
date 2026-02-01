@@ -1,0 +1,13 @@
+import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_detail.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_list_response.dart';
+
+abstract interface class PokemonRepository {
+  /// Obtener la lista de pokemons con offset y limit
+  Future<PokemonListResponse> getPokemonList({
+    required int limit,
+    required int offset,
+  });
+
+  /// Obtener el detalle de un pokemon por id
+  Future<PokemonDetail> getPokemonDetail(int id);
+}
