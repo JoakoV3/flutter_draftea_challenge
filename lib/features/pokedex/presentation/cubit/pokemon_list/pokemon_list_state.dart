@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../data/models/pokemon_list_item.dart';
+import '../../../domain/models/pokemon_list_item.dart';
 
 /// Enum para los diferentes estados del cubit
 enum PokemonListStatus { initial, loading, loaded, loadingMore, error }

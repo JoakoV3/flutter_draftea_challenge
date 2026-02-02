@@ -1,6 +1,6 @@
 import 'package:flutter_draftea_challenge/core/network/dio_client.dart';
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_detail.dart';
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_list_response.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_list_response.dart';
 
 /// DataSource remoto para obtener datos de Pokemon desde la API
 abstract interface class PokemonRemoteDatasource {

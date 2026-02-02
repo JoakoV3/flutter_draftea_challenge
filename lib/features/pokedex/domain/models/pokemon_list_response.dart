@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_list_item.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_list_item.dart';
 
 /// Respuesta de la lista de Pokemon con metadata de paginación
 class PokemonListResponse extends Equatable {

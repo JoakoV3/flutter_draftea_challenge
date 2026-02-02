@@ -1,4 +1,4 @@
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_list_response.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_list_response.dart';
 
 abstract interface class PokemonLocalDatasource {
   Future<void> savePokemonList(PokemonListResponse pokemonList);

@@ -1,7 +1,7 @@
 import 'package:flutter_draftea_challenge/features/pokedex/data/datasources/pokemon_local_datasource.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/datasources/pokemon_remote_datasource.dart';
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_detail.dart';
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_list_response.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_list_response.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/repositories/pokemon_repository.dart';
 
 class PokemonRepositoryImpl implements PokemonRepository {

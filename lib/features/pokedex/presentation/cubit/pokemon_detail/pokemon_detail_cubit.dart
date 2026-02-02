@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/repositories/pokemon_repository.dart';
 
-import '../../../data/models/pokemon_detail.dart';
+import '../../../domain/models/pokemon_detail.dart';
 import 'pokemon_detail_state.dart';
 
 class PokemonDetailCubit extends Cubit<PokemonDetailState> {
@@ -14,7 +14,7 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
     try {
       emit(state.copyWith(status: PokemonDetailStatus.loading));
 
-      final pokemonData = await _repository.getPokemonDetail(id);
+      final pokemonData = _repository.getPokemonDetail(id);
 
       // emit(state.copyWith(
       //   status: PokemonDetailStatus.loaded,

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_draftea_challenge/features/pokedex/data/models/pokemon_list_item.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_list_item.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/repositories/pokemon_repository.dart';
 
 import 'pokemon_list_state.dart';
