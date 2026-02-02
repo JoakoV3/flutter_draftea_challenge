@@ -16,9 +16,28 @@ class PokemonRepositoryImpl implements PokemonRepository {
 
   @override
   Stream<PokemonDetail> getPokemonDetail(int id) async* {
-    //TODO: Implementar llamada a local
-    final response = await _remoteDatasource.getPokemonDetail(id);
-    yield response;
+    // 1. Emitir detalle local si existe (offline-first)
+    final localDetail = await _localDatasource.getPokemonDetail(id);
+    if (localDetail != null) {
+      yield localDetail;
+    }
+
+    // 2. Obtener detalle remoto
+    try {
+      final remoteDetail = await _remoteDatasource.getPokemonDetail(id);
+
+      // 3. Guardar en BD
+      await _localDatasource.savePokemonDetail(remoteDetail);
+
+      // 4. Emitir detalle remoto
+      yield remoteDetail;
+    } catch (e) {
+      // Si falla la API y ya emitimos datos locales, no hacer nada
+      // Si no hay datos locales, propagar el error
+      if (localDetail == null) {
+        rethrow;
+      }
+    }
   }
 
   @override
@@ -26,11 +45,33 @@ class PokemonRepositoryImpl implements PokemonRepository {
     required int limit,
     required int offset,
   }) async* {
-    //TODO: Implementar llamada a local
-    final response = await _remoteDatasource.getPokemonList(
+    // 1. Emitir datos locales (offline-first)
+    final localData = await _localDatasource.getPokemonList(
       limit: limit,
       offset: offset,
     );
-    yield response;
+    if (localData.pokemons.isNotEmpty) {
+      yield localData;
+    }
+
+    // 2. Obtener datos remotos
+    try {
+      final remoteData = await _remoteDatasource.getPokemonList(
+        limit: limit,
+        offset: offset,
+      );
+
+      // 3. Guardar en BD
+      await _localDatasource.savePokemonList(remoteData);
+
+      // 4. Emitir datos remotos
+      yield remoteData;
+    } catch (e) {
+      // Si falla la API y ya emitimos datos locales, no hacer nada
+      // Si no hay datos locales, propagar el error
+      if (localData.pokemons.isEmpty) {
+        rethrow;
+      }
+    }
   }
 }

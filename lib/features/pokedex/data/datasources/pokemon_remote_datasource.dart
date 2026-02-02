@@ -24,13 +24,13 @@ class PokemonRemoteDatasourceImpl implements PokemonRemoteDatasource {
   }) async {
     final url = '/pokemon?limit=$limit&offset=$offset';
     final response = await _httpClient.get(url);
-    return PokemonListResponse.fromJson(response as Map<String, dynamic>);
+    return PokemonListResponse.fromJson(response.data as Map<String, dynamic>);
   }
 
   @override
   Future<PokemonDetail> getPokemonDetail(int id) async {
     final url = '/pokemon/$id';
     final response = await _httpClient.get(url);
-    return PokemonDetail.fromJson(response as Map<String, dynamic>);
+    return PokemonDetail.fromJson(response.data as Map<String, dynamic>);
   }
 }

@@ -1,6 +1,6 @@
 name: flutter_draftea_challenge
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -24,7 +24,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.30.1
   build_runner: ^2.10.5
-
+  very_good_analysis: ^10.0.0
 
 flutter:
   uses-material-design: true

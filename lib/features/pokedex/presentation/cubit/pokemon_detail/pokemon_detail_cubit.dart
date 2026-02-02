@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/repositories/pokemon_repository.dart';
 
-import '../../../domain/models/pokemon_detail.dart';
 import 'pokemon_detail_state.dart';
 
 class PokemonDetailCubit extends Cubit<PokemonDetailState> {
@@ -14,33 +13,16 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
     try {
       emit(state.copyWith(status: PokemonDetailStatus.loading));
 
-      final pokemonData = _repository.getPokemonDetail(id);
-
-      // emit(state.copyWith(
-      //   status: PokemonDetailStatus.loaded,
-      //   pokemon: pokemon,
-      //   isFavorite: isFavorite,
-      //   errorMessage: null,
-      // ));
-
-      // Emisión temporal para testing
-      emit(
-        state.copyWith(
-          status: PokemonDetailStatus.loaded,
-          pokemon: PokemonDetail(
-            id: id,
-            name: 'Pokemon $id',
-            height: 0,
-            weight: 0,
-            types: [],
-            abilities: [],
-            stats: {},
-            sprites: const PokemonSprites(frontDefault: ''),
+      // Escuchar el stream del repositorio (emite local primero, luego remoto)
+      await for (final pokemon in _repository.getPokemonDetail(id)) {
+        emit(
+          state.copyWith(
+            status: PokemonDetailStatus.loaded,
+            pokemon: pokemon,
+            errorMessage: null,
           ),
-          isFavorite: false,
-          errorMessage: null,
-        ),
-      );
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(

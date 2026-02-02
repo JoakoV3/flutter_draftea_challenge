@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'network_exceptions.dart';
 
@@ -14,7 +16,6 @@ class DioClient {
 
   static const Duration _connectTimeout = Duration(seconds: 30);
   static const Duration _receiveTimeout = Duration(seconds: 30);
-  static const Duration _sendTimeout = Duration(seconds: 30);
 
   DioClient({Map<String, dynamic>? headers, List<Interceptor>? interceptors}) {
     _dio = Dio(
@@ -23,7 +24,6 @@ class DioClient {
         baseUrl: 'https://pokeapi.co/api/v2',
         connectTimeout: _connectTimeout,
         receiveTimeout: _receiveTimeout,
-        sendTimeout: _sendTimeout,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -32,6 +32,15 @@ class DioClient {
         validateStatus: (status) {
           // Aceptar todos los códigos de estado para manejarlos manualmente
           return status != null && status < 500;
+        },
+      ),
+    );
+
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onError: (error, handler) {
+          log('Hubo un error en DioClient: ${error.message}');
+          handler.next(error);
         },
       ),
     );
