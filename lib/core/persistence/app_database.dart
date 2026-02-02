@@ -14,6 +14,12 @@ class AppDatabase extends _$AppDatabase {
 
   /// Crea la conexión a la base de datos usando drift_flutter
   static QueryExecutor _openConnection() {
-    return driftDatabase(name: 'pokedex_db');
+    return driftDatabase(
+      name: 'pokedex_db',
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.dart.js'),
+      ),
+    );
   }
 }
