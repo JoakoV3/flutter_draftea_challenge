@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
-import '../../cubit/pokemon_detail/pokemon_detail_cubit.dart';
-import '../../cubit/pokemon_detail/pokemon_detail_state.dart';
-import 'widgets/pokemon_detail_widgets.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_detail/pokemon_detail_cubit.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_detail/pokemon_detail_state.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/presentation/pages/detail/widgets/detail_widgets.dart';
 
 class DetailDesktopPage extends StatefulWidget {
   final int pokemonId;
@@ -24,17 +24,7 @@ class _DetailDesktopPageState extends State<DetailDesktopPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pokemon Detail'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {
-              // TODO: Implementar funcionalidad de favoritos
-            },
-          ),
-        ],
-      ),
+      appBar: DetailAppbar(),
       body: BlocBuilder<PokemonDetailCubit, PokemonDetailState>(
         builder: (context, state) {
           return switch (state.status) {
@@ -87,7 +77,8 @@ class _PokemonDetailContent extends StatelessWidget {
                   // Columna izquierda: Imagen
                   Expanded(
                     flex: 2,
-                    child: _PokemonImage(
+                    child: PokemonImage(
+                      type: pokemon.types.first,
                       imageUrl:
                           pokemon.sprites.officialArtwork ??
                           pokemon.sprites.frontDefault,
@@ -120,28 +111,6 @@ class _PokemonDetailContent extends StatelessWidget {
               PokemonStats(stats: pokemon.stats),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PokemonImage extends StatelessWidget {
-  final String imageUrl;
-
-  const _PokemonImage({required this.imageUrl});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Container(
-        padding: const EdgeInsets.all(32),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.catching_pokemon, size: 200, color: Colors.grey),
         ),
       ),
     );

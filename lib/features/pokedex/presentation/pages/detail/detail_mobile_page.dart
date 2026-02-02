@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
 import '../../cubit/pokemon_detail/pokemon_detail_cubit.dart';
 import '../../cubit/pokemon_detail/pokemon_detail_state.dart';
-import 'widgets/pokemon_detail_widgets.dart';
+import 'widgets/detail_widgets.dart';
 
 class DetailMobilePage extends StatefulWidget {
   final int pokemonId;
@@ -24,17 +24,7 @@ class _DetailMobilePageState extends State<DetailMobilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pokemon Detail'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border),
-            onPressed: () {
-              // TODO: Implementar funcionalidad de favoritos
-            },
-          ),
-        ],
-      ),
+      appBar: DetailAppbar(),
       body: BlocBuilder<PokemonDetailCubit, PokemonDetailState>(
         builder: (context, state) {
           return switch (state.status) {
@@ -89,9 +79,11 @@ class _PokemonDetailContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Imagen del Pokemon
-          _PokemonImage(
+          PokemonImage(
             imageUrl:
                 pokemon.sprites.officialArtwork ?? pokemon.sprites.frontDefault,
+            type: pokemon.types.first,
+            isMobile: true,
           ),
           Padding(
             padding: const EdgeInsets.all(16),
@@ -102,15 +94,6 @@ class _PokemonDetailContent extends StatelessWidget {
                   name: pokemon.name,
                   id: pokemon.id,
                   showID: false,
-                  nameStyle: Theme.of(context).textTheme.headlineLarge
-                      ?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        shadows: const [
-                          Shadow(offset: Offset(-2, 3), color: Colors.black),
-                        ],
-                        fontFamily: 'Superstar',
-                      ),
                 ),
                 const SizedBox(height: 16),
                 PokemonTypes(types: pokemon.types, fontSize: 12),
@@ -159,34 +142,6 @@ class _PokemonDetailContent extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _PokemonImage extends StatelessWidget {
-  final String imageUrl;
-
-  const _PokemonImage({required this.imageUrl});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
-        ),
-      ),
-      child: Center(
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.catching_pokemon, size: 150, color: Colors.grey),
-        ),
       ),
     );
   }
