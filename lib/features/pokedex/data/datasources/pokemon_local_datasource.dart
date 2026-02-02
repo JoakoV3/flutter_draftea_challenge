@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:drift/drift.dart';
 import 'package:flutter_draftea_challenge/core/persistence/app_database.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/mappers/pokemon_mapper.dart';
@@ -44,6 +46,12 @@ class PokemonLocalDatasourceImpl implements PokemonLocalDatasource {
             ),
           );
     }
+
+    // Verificar que se guardaron
+    final count = await (_database.selectOnly(
+      table,
+    )..addColumns([table.id.count()])).getSingle();
+    log('Guardado completado. Total en BD: ${count.read(table.id.count())}');
   }
 
   @override

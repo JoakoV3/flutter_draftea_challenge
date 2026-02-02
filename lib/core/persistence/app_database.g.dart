@@ -258,33 +258,14 @@ class $PokemonTableTable extends PokemonTable
 
 class PokemonTableData extends DataClass
     implements Insertable<PokemonTableData> {
-  /// ID único del Pokemon (primary key)
   final int id;
-
-  /// Nombre del Pokemon
   final String name;
-
-  /// URL de la imagen oficial del Pokemon
   final String imageUrl;
-
-  /// Altura del Pokemon en decímetros (nullable hasta que se cargue el detalle)
   final int? height;
-
-  /// Peso del Pokemon en hectogramos (nullable hasta que se cargue el detalle)
   final int? weight;
-
-  /// Tipos del Pokemon en formato JSON (ej: ["grass", "poison"])
   final String? types;
-
-  /// Habilidades del Pokemon en formato JSON (ej: ["overgrow", "chlorophyll"])
   final String? abilities;
-
-  /// Estadísticas del Pokemon en formato JSON
-  /// Formato: {"hp": 45, "attack": 49, "defense": 49, ...}
   final String? stats;
-
-  /// Sprites del Pokemon en formato JSON
-  /// Formato: {"frontDefault": "url", "frontShiny": "url", ...}
   final String? sprites;
 
   /// Timestamp de la última actualización (para invalidación de caché futura)

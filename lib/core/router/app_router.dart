@@ -10,5 +10,4 @@ final GoRouter appRouter = GoRouter(
     //TODO: implementar pantalla de error
     return const Placeholder();
   },
-  debugLogDiagnostics: true,
 );

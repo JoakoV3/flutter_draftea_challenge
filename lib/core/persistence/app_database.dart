@@ -18,7 +18,7 @@ class AppDatabase extends _$AppDatabase {
       name: 'pokedex_db',
       web: DriftWebOptions(
         sqlite3Wasm: Uri.parse('sqlite3.wasm'),
-        driftWorker: Uri.parse('drift_worker.dart.js'),
+        driftWorker: Uri.parse('drift_worker.js'),
       ),
     );
   }

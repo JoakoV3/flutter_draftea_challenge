@@ -7,12 +7,23 @@ import 'pokemon_list_state.dart';
 class PokemonListCubit extends Cubit<PokemonListState> {
   final PokemonRepository _repository;
 
-  static const int _pageSize = 15;
+  static const int _pageSize = 20;
 
   PokemonListCubit(this._repository) : super(const PokemonListState());
 
   /// Carga la primera página de Pokemon
   Future<void> loadPokemons() async {
+    // Evitar múltiples llamadas simultáneas o recargar si ya hay datos
+    if (state.status == PokemonListStatus.loading ||
+        state.status == PokemonListStatus.loadingMore) {
+      return;
+    }
+
+    // Si ya hay datos cargados, no recargar (usar refresh() para forzar recarga)
+    if (state.pokemons.isNotEmpty && state.status == PokemonListStatus.loaded) {
+      return;
+    }
+
     try {
       emit(state.copyWith(status: PokemonListStatus.loading));
 
