@@ -28,3 +28,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/fonts/
+
+  fonts:
+    - family: Superstar
+      fonts:
+        - asset: assets/fonts/superstar.ttf

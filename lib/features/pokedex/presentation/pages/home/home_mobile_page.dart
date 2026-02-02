@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_draftea_challenge/core/router/routes.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_cubit.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_state.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeMobilePage extends StatelessWidget {
   const HomeMobilePage({super.key});
@@ -72,10 +74,8 @@ class HomeMobilePage extends StatelessWidget {
                 const Icon(Icons.error),
           ),
           title: Text(pokemon.name),
-          subtitle: Text('ID: ${pokemon.id}'),
-          onTap: () {
-            // TODO: Navegar a detalle
-          },
+          onTap: () =>
+              context.push(AppRoutes.pokemonDetailPath(id: pokemon.id)),
         );
       },
     );

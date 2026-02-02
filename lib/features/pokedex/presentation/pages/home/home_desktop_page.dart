@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_draftea_challenge/core/router/routes.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_cubit.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_state.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeDesktopPage extends StatelessWidget {
   const HomeDesktopPage({super.key});
@@ -67,9 +69,8 @@ class HomeDesktopPage extends StatelessWidget {
         final pokemon = state.pokemons[index];
         return Card(
           child: InkWell(
-            onTap: () {
-              // TODO: Navegar a detalle
-            },
+            onTap: () =>
+                context.push(AppRoutes.pokemonDetailPath(id: pokemon.id)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
