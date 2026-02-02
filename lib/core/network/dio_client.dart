@@ -9,21 +9,18 @@ import 'network_exceptions.dart';
 /// - Interceptores de Request/Response para logging
 /// - Manejo de errores
 /// - Gestión de tokens de autenticación
-class HttpClient {
+class DioClient {
   late final Dio _dio;
 
   static const Duration _connectTimeout = Duration(seconds: 30);
   static const Duration _receiveTimeout = Duration(seconds: 30);
   static const Duration _sendTimeout = Duration(seconds: 30);
 
-  HttpClient({
-    required String baseUrl,
-    Map<String, dynamic>? headers,
-    List<Interceptor>? interceptors,
-  }) {
+  DioClient({Map<String, dynamic>? headers, List<Interceptor>? interceptors}) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: baseUrl,
+        // Hardcodeada porque es una API pública
+        baseUrl: 'https://pokeapi.co/api/v2',
         connectTimeout: _connectTimeout,
         receiveTimeout: _receiveTimeout,
         sendTimeout: _sendTimeout,

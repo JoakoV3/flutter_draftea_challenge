@@ -10,14 +10,24 @@ class PokemonListResponse extends Equatable {
   final bool hasMore;
 
   /// Total de Pokemon disponibles (opcional)
-  final int? total;
+  final int? count;
 
   const PokemonListResponse({
     required this.pokemons,
     required this.hasMore,
-    this.total,
+    this.count,
   });
 
   @override
-  List<Object?> get props => [pokemons, hasMore, total];
+  List<Object?> get props => [pokemons, hasMore, count];
+
+  factory PokemonListResponse.fromJson(Map<String, dynamic> json) {
+    return PokemonListResponse(
+      pokemons: List<PokemonListItem>.from(
+        json['results'].map((x) => PokemonListItem.fromJson(x)),
+      ),
+      hasMore: json['next'] != null,
+      count: json['count'],
+    );
+  }
 }

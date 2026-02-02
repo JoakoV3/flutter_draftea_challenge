@@ -1,2 +1,2 @@
-export 'http_client.dart';
+export 'dio_client.dart';
 export 'network_exceptions.dart';
