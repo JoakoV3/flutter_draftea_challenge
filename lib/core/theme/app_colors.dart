@@ -9,6 +9,7 @@ class AppColors {
   // Colores secundarios - Azul Pokemon
   static const Color pokemonBlue = Color(0xFF1976D2);
   static const Color pokemonBlueDark = Color(0xFF0D47A1);
+  static const Color pokemonBlueLight = Color(0xFFE3F2FD);
 
   // Gradientes
   static LinearGradient redGradient = LinearGradient(

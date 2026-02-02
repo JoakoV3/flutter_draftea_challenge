@@ -33,29 +33,6 @@ class PokemonDetailCubit extends Cubit<PokemonDetailState> {
     }
   }
 
-  /// Alterna el estado de favorito del Pokemon actual
-  Future<void> toggleFavorite() async {
-    if (state.pokemon == null) {
-      return;
-    }
-
-    try {
-      final newFavoriteStatus = !state.isFavorite;
-
-      // TODO: Actualizar en la base de datos local
-      // if (newFavoriteStatus) {
-      //   await _repository.addToFavorites(state.pokemon!);
-      // } else {
-      //   await _repository.removeFromFavorites(state.pokemon!.id);
-      // }
-
-      emit(state.copyWith(isFavorite: newFavoriteStatus));
-    } catch (e) {
-      // En caso de error, mantener el estado actual
-      // Opcionalmente podrías emitir un estado de error o mostrar un snackbar
-    }
-  }
-
   /// Recarga el Pokemon actual
   Future<void> refresh() async {
     if (state.pokemon != null) {

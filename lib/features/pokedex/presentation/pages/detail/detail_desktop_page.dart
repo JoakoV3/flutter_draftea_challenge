@@ -87,27 +87,54 @@ class _PokemonDetailContent extends StatelessWidget {
                   const SizedBox(width: 32),
                   // Columna derecha: Información
                   Expanded(
-                    flex: 3,
+                    flex: 4,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 24,
                       children: [
                         PokemonHeader(name: pokemon.name, id: pokemon.id),
-                        const SizedBox(height: 24),
                         PokemonTypes(types: pokemon.types),
-                        const SizedBox(height: 24),
-                        PokemonBasicInfo(
-                          height: pokemon.height,
-                          weight: pokemon.weight,
-                          isMobile: false,
+                        IntrinsicHeight(
+                          child: Row(
+                            spacing: 16,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: PokemonBasicInfo(
+                                  height: pokemon.height,
+                                  weight: pokemon.weight,
+                                  isMobile: false,
+                                  titleStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Expanded(
+                                child: PokemonAbilities(
+                                  abilities: pokemon.abilities,
+                                  titleStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(fontWeight: FontWeight.bold),
+                                  iconSize: 14,
+                                  fontSize: 12,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  borderRadius: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 24),
-                        PokemonAbilities(abilities: pokemon.abilities),
-                        const SizedBox(height: 24),
                       ],
                     ),
                   ),
                 ],
               ),
+              const SizedBox(height: 24),
               PokemonStats(stats: pokemon.stats),
             ],
           ),

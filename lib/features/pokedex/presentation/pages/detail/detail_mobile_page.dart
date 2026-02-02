@@ -98,27 +98,36 @@ class _PokemonDetailContent extends StatelessWidget {
                 const SizedBox(height: 16),
                 PokemonTypes(types: pokemon.types, fontSize: 12),
                 const SizedBox(height: 16),
-                PokemonBasicInfo(
-                  height: pokemon.height,
-                  weight: pokemon.weight,
-                  isMobile: true,
-                  titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                IntrinsicHeight(
+                  child: Row(
+                    spacing: 16,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: PokemonBasicInfo(
+                          height: pokemon.height,
+                          weight: pokemon.weight,
+                          isMobile: true,
+                          titleStyle: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: PokemonAbilities(
+                          abilities: pokemon.abilities,
+                          titleStyle: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                          iconSize: 14,
+                          fontSize: 12,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          borderRadius: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 16),
-                PokemonAbilities(
-                  abilities: pokemon.abilities,
-                  titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                  iconSize: 14,
-                  fontSize: 12,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  borderRadius: 16,
                 ),
                 const SizedBox(height: 16),
                 PokemonStats(

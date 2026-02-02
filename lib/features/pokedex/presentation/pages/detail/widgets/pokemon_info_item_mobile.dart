@@ -17,13 +17,11 @@ class PokemonInfoItemMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, size: 28, color: Colors.blue),
-        const SizedBox(height: 8),
         Text(
           label,
           style: Theme.of(
             context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+          ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
         ),
         const SizedBox(height: 4),
         Text(

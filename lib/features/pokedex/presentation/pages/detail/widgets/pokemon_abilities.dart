@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_draftea_challenge/core/theme/app_colors.dart';
 
 /// Card con las habilidades del Pokemon
 class PokemonAbilities extends StatelessWidget {
@@ -43,24 +44,17 @@ class PokemonAbilities extends StatelessWidget {
                 return Container(
                   padding: padding,
                   decoration: BoxDecoration(
-                    color: Colors.blue[50],
+                    color: AppColors.pokemonBlueLight,
                     borderRadius: BorderRadius.circular(borderRadius),
-                    border: Border.all(color: Colors.blue[200]!),
+                    border: Border.all(color: AppColors.pokemonBlueDark),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.star, size: iconSize, color: Colors.blue[700]),
-                      const SizedBox(width: 8),
-                      Text(
-                        ability.replaceAll('-', ' ').toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.blue[900],
-                          fontWeight: FontWeight.w600,
-                          fontSize: fontSize,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    ability.replaceAll('-', ' ').toUpperCase(),
+                    style: TextStyle(
+                      color: AppColors.pokemonBlueDark,
+                      fontWeight: FontWeight.w600,
+                      fontSize: fontSize,
+                    ),
                   ),
                 );
               }).toList(),

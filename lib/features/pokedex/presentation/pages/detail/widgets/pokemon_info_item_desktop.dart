@@ -17,8 +17,6 @@ class PokemonInfoItemDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 32, color: Colors.blue),
-        const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,7 +24,7 @@ class PokemonInfoItemDesktop extends StatelessWidget {
               label,
               style: Theme.of(
                 context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+              ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
             ),
             Text(
               value,
