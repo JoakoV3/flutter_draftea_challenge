@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pokemon_type_colors.dart';
+import 'package:flutter_draftea_challenge/core/theme/app_colors.dart';
 
 /// Chips de tipos del Pokemon
 class PokemonTypes extends StatelessWidget {
@@ -22,7 +22,7 @@ class PokemonTypes extends StatelessWidget {
               fontSize: fontSize,
             ),
           ),
-          backgroundColor: PokemonTypeColors.getColor(type),
+          backgroundColor: AppColors.typeColors[type.toLowerCase()],
         );
       }).toList(),
     );

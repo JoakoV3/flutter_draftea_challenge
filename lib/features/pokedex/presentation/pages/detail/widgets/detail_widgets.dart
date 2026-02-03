@@ -9,5 +9,4 @@ export 'pokemon_stat_bar.dart';
 export 'pokemon_stat_colors.dart';
 export 'pokemon_stat_formatter.dart';
 export 'pokemon_stats.dart';
-export 'pokemon_type_colors.dart';
 export 'pokemon_types.dart';
