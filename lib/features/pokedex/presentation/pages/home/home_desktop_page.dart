@@ -12,7 +12,10 @@ class HomeDesktopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pokédex')),
+      appBar: AppBar(
+        title: Image.asset('assets/images/poke_logo.png', width: 130),
+      ),
+
       body: BlocBuilder<PokemonListCubit, PokemonListState>(
         builder: (context, state) {
           return switch (state.status) {
@@ -45,7 +48,15 @@ class HomeDesktopPage extends StatelessWidget {
 
   Widget _buildPokemonGrid(BuildContext context, PokemonListState state) {
     if (state.pokemons.isEmpty) {
-      return const Center(child: Text('No Pokemon found'));
+      return PokemonEmptyStateWidget(
+        message: 'No se encontraron Pokémones',
+        subtitle: 'Intenta recargar la página',
+        action: ElevatedButton.icon(
+          onPressed: () => context.read<PokemonListCubit>().refresh(),
+          icon: const Icon(Icons.refresh),
+          label: const Text('Recargar'),
+        ),
+      );
     }
 
     const double cardWidth = 250;

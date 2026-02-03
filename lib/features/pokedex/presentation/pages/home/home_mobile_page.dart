@@ -12,7 +12,9 @@ class HomeMobilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pokédex')),
+      appBar: AppBar(
+        title: Image.asset('assets/images/poke_logo.png', width: 130),
+      ),
       body: BlocBuilder<PokemonListCubit, PokemonListState>(
         builder: (context, state) {
           return switch (state.status) {
@@ -41,7 +43,15 @@ class HomeMobilePage extends StatelessWidget {
 
   Widget _buildPokemonList(BuildContext context, PokemonListState state) {
     if (state.pokemons.isEmpty) {
-      return const Center(child: Text('No Pokemon found'));
+      return PokemonEmptyStateWidget(
+        message: 'No se encontraron Pokémones',
+        subtitle: 'Intenta recargar la página',
+        action: ElevatedButton.icon(
+          onPressed: () => context.read<PokemonListCubit>().refresh(),
+          icon: const Icon(Icons.refresh),
+          label: const Text('Recargar'),
+        ),
+      );
     }
 
     return ListView.builder(
@@ -65,8 +75,8 @@ class HomeMobilePage extends StatelessWidget {
         return ListTile(
           leading: Image.network(
             pokemon.imageUrl,
-            width: 50,
-            height: 50,
+            width: 100,
+            height: 100,
             errorBuilder: (context, error, stackTrace) =>
                 const Icon(Icons.error),
           ),
