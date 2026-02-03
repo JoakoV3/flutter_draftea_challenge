@@ -63,64 +63,69 @@ class HomeDesktopPage extends StatelessWidget {
     const double cardHeight = 312.5;
     const double spacing = 16;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Wrap(
-        spacing: spacing,
-        runSpacing: spacing,
-        children: [
-          // Generar tarjetas de Pokemon
-          for (final pokemon in state.pokemons)
-            SizedBox(
-              width: cardWidth,
-              height: cardHeight,
-              child: Card(
-                child: InkWell(
-                  onTap: () =>
-                      context.push(AppRoutes.pokemonDetailPath(id: pokemon.id)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Image.network(
-                          pokemon.imageUrl,
-                          fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Icon(Icons.error, size: 50),
-                        ),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (ScrollNotification scrollInfo) {
+        // Detectar cuando está cerca del final del scroll
+        if (scrollInfo.metrics.pixels >=
+                scrollInfo.metrics.maxScrollExtent * 0.8 &&
+            state.hasMore &&
+            state.status != PokemonListStatus.loadingMore) {
+          context.read<PokemonListCubit>().loadMorePokemons();
+        }
+        return false;
+      },
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Center(
+          child: Wrap(
+            spacing: spacing,
+            runSpacing: spacing,
+            children: [
+              // Generar tarjetas de Pokemon
+              for (final pokemon in state.pokemons)
+                SizedBox(
+                  width: cardWidth,
+                  height: cardHeight,
+                  child: Card(
+                    child: InkWell(
+                      onTap: () => context.push(
+                        AppRoutes.pokemonDetailPath(id: pokemon.id),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          pokemon.name.toUpperCase(),
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Image.network(
+                              pokemon.imageUrl,
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.error, size: 50),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              pokemon.name.toUpperCase(),
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          // Mostrar indicador de carga al final si hay más datos
-          if (state.hasMore)
-            SizedBox(
-              width: cardWidth,
-              height: cardHeight,
-              child: Builder(
-                builder: (context) {
-                  // Cargar más cuando se muestre el indicador
-                  if (state.status != PokemonListStatus.loadingMore) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      context.read<PokemonListCubit>().loadMorePokemons();
-                    });
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
-            ),
-        ],
+              // Mostrar indicador de carga al final si está cargando más
+              if (state.status == PokemonListStatus.loadingMore)
+                const SizedBox(
+                  width: cardWidth,
+                  height: cardHeight,
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

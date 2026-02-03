@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 /// Widget que muestra un estado vacío con un GIF de Pikachu llorando.
-///
-/// Se utiliza cuando no hay datos para mostrar en una lista o pantalla.
 class PokemonEmptyStateWidget extends StatelessWidget {
   /// El tamaño del GIF. Por defecto es 250x250.
   final double size;
@@ -40,7 +38,7 @@ class PokemonEmptyStateWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 24,
                     spreadRadius: 4,
                   ),

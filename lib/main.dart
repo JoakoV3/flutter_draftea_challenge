@@ -7,9 +7,12 @@ import 'package:flutter_draftea_challenge/core/theme/app_theme.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/datasources/pokemon_local_datasource.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/datasources/pokemon_remote_datasource.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/repositories_impl/pokemon_repository_impl.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  usePathUrlStrategy(); // Use the path URL strategy
 
   // Inicializar base de datos
   final database = AppDatabase();

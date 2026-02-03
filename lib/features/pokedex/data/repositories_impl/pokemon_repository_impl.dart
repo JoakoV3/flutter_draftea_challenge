@@ -1,5 +1,7 @@
+import 'package:flutter_draftea_challenge/core/network/network_exceptions.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/datasources/pokemon_local_datasource.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/data/datasources/pokemon_remote_datasource.dart';
+import 'package:flutter_draftea_challenge/features/pokedex/domain/exceptions/pokemon_exceptions.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_list_response.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/repositories/pokemon_repository.dart';
@@ -31,11 +33,16 @@ class PokemonRepositoryImpl implements PokemonRepository {
 
       // 4. Emitir detalle remoto
       yield remoteDetail;
-    } catch (e) {
-      // Si falla la API y ya emitimos datos locales, no hacer nada
-      // Si no hay datos locales, propagar el error
+    } on NetworkException catch (e) {
+      // Si falla la red y ya emitimos datos locales, no hacer nada
+      // Si no hay datos locales, lanzar excepción de dominio
       if (localDetail == null) {
-        rethrow;
+        throw PokemonDetailFetchException(id, e.message);
+      }
+    } on Exception catch (e) {
+      // Para cualquier otra excepción (parsing, etc.)
+      if (localDetail == null) {
+        throw PokemonDetailFetchException(id, e.toString());
       }
     }
   }
@@ -66,11 +73,16 @@ class PokemonRepositoryImpl implements PokemonRepository {
 
       // 4. Emitir datos remotos
       yield remoteData;
-    } catch (e) {
-      // Si falla la API y ya emitimos datos locales, no hacer nada
-      // Si no hay datos locales, propagar el error
+    } on NetworkException catch (e) {
+      // Si falla la red y ya emitimos datos locales, no hacer nada
+      // Si no hay datos locales, lanzar excepción de dominio
       if (localData.pokemons.isEmpty) {
-        rethrow;
+        throw PokemonListFetchException(e.message);
+      }
+    } on Exception catch (e) {
+      // Para cualquier otra excepción (parsing, cache, etc.)
+      if (localData.pokemons.isEmpty) {
+        throw PokemonListFetchException(e.toString());
       }
     }
   }
