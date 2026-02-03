@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_draftea_challenge/core/widgets/pokemon_loading_widget.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
 import '../../cubit/pokemon_detail/pokemon_detail_cubit.dart';
 import '../../cubit/pokemon_detail/pokemon_detail_state.dart';
@@ -29,7 +30,7 @@ class _DetailMobilePageState extends State<DetailMobilePage> {
         builder: (context, state) {
           return switch (state.status) {
             PokemonDetailStatus.initial || PokemonDetailStatus.loading =>
-              const Center(child: CircularProgressIndicator()),
+              const PokemonLoadingWidget(message: 'Cargando Pokémon...'),
             PokemonDetailStatus.error => Center(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

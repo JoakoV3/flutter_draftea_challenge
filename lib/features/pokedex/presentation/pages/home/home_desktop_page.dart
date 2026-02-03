@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_draftea_challenge/core/router/routes.dart';
+import 'package:flutter_draftea_challenge/core/widgets/widgets.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_cubit.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_state.dart';
 import 'package:go_router/go_router.dart';
@@ -18,8 +19,8 @@ class HomeDesktopPage extends StatelessWidget {
             PokemonListStatus.initial => const Center(
               child: Text('Initializing...'),
             ),
-            PokemonListStatus.loading => const Center(
-              child: CircularProgressIndicator(),
+            PokemonListStatus.loading => const PokemonLoadingWidget(
+              message: 'Cargando Pokédex...',
             ),
             PokemonListStatus.loaded ||
             PokemonListStatus.loadingMore => _buildPokemonGrid(context, state),
@@ -47,62 +48,69 @@ class HomeDesktopPage extends StatelessWidget {
       return const Center(child: Text('No Pokemon found'));
     }
 
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        childAspectRatio: 0.8,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-      ),
-      itemCount: state.pokemons.length + (state.hasMore ? 1 : 0),
-      itemBuilder: (context, index) {
-        // Mostrar indicador de carga al final si hay más datos
-        if (index == state.pokemons.length) {
-          // Cargar más cuando llegue al final
-          if (state.status != PokemonListStatus.loadingMore) {
-            context.read<PokemonListCubit>().loadMorePokemons();
-          }
-          return const Center(child: CircularProgressIndicator());
-        }
+    const double cardWidth = 250;
+    const double cardHeight = 312.5;
+    const double spacing = 16;
 
-        final pokemon = state.pokemons[index];
-        return Card(
-          child: InkWell(
-            onTap: () =>
-                context.push(AppRoutes.pokemonDetailPath(id: pokemon.id)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Image.network(
-                    pokemon.imageUrl,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.error, size: 50),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Wrap(
+        spacing: spacing,
+        runSpacing: spacing,
+        children: [
+          // Generar tarjetas de Pokemon
+          for (final pokemon in state.pokemons)
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: Card(
+                child: InkWell(
+                  onTap: () =>
+                      context.push(AppRoutes.pokemonDetailPath(id: pokemon.id)),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        pokemon.name,
-                        style: Theme.of(context).textTheme.titleMedium,
-                        textAlign: TextAlign.center,
+                      Expanded(
+                        child: Image.network(
+                          pokemon.imageUrl,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.error, size: 50),
+                        ),
                       ),
-                      Text(
-                        'ID: ${pokemon.id}',
-                        style: Theme.of(context).textTheme.bodySmall,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          pokemon.name.toUpperCase(),
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        );
-      },
+          // Mostrar indicador de carga al final si hay más datos
+          if (state.hasMore)
+            SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: Builder(
+                builder: (context) {
+                  // Cargar más cuando se muestre el indicador
+                  if (state.status != PokemonListStatus.loadingMore) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      context.read<PokemonListCubit>().loadMorePokemons();
+                    });
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

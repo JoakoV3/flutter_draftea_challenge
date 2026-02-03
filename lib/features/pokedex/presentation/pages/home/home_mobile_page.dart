@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_draftea_challenge/core/router/routes.dart';
+import 'package:flutter_draftea_challenge/core/widgets/widgets.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_cubit.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_list/pokemon_list_state.dart';
 import 'package:go_router/go_router.dart';
@@ -15,12 +16,8 @@ class HomeMobilePage extends StatelessWidget {
       body: BlocBuilder<PokemonListCubit, PokemonListState>(
         builder: (context, state) {
           return switch (state.status) {
-            PokemonListStatus.initial => const Center(
-              child: Text('Initializing...'),
-            ),
-            PokemonListStatus.loading => const Center(
-              child: CircularProgressIndicator(),
-            ),
+            PokemonListStatus.initial || PokemonListStatus.loading =>
+              const PokemonLoadingWidget(message: 'Cargando Pokédex...'),
             PokemonListStatus.loaded ||
             PokemonListStatus.loadingMore => _buildPokemonList(context, state),
             PokemonListStatus.error => Center(

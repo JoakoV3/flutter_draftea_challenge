@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_draftea_challenge/core/widgets/widgets.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/domain/models/pokemon_detail.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_detail/pokemon_detail_cubit.dart';
 import 'package:flutter_draftea_challenge/features/pokedex/presentation/cubit/pokemon_detail/pokemon_detail_state.dart';
@@ -29,7 +30,7 @@ class _DetailDesktopPageState extends State<DetailDesktopPage> {
         builder: (context, state) {
           return switch (state.status) {
             PokemonDetailStatus.initial || PokemonDetailStatus.loading =>
-              const Center(child: CircularProgressIndicator()),
+              const PokemonLoadingWidget(message: 'Cargando Pokémon...'),
             PokemonDetailStatus.error => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
