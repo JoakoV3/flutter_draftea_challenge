@@ -2,6 +2,63 @@
 
 Este repositorio contiene la solución a la prueba técnica para el puesto de Flutter Developer.
 
+## Capturas de pantalla
+
+### Mobile
+<img src="screenshots/5.png" width="200">
+<img src="screenshots/2.png" width="200">
+<img src="screenshots/1.png" width="200">
+
+### Desktop
+<img src="screenshots/3.png" width="500">
+<img src="screenshots/4.png" width="500">
+
+
+
+## Instrucciones de instalación y ejecución
+
+### Requisitos previos
+
+- Flutter SDK 3.10.3 o superior
+- Dart SDK incluido con Flutter
+- Para mobile: Android Studio / Xcode configurado
+- Para web: Chrome instalado
+
+### Instalación
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone <repository-url>
+   cd flutter_draftea_challenge
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   flutter pub get
+   ```
+
+#### Mobile (Android/iOS)
+
+```bash
+# Listar dispositivos disponibles
+flutter devices
+
+# Ejecutar en dispositivo/emulador específico
+flutter run -d <device-id>
+
+# O simplemente (seleccionará automáticamente)
+flutter run
+```
+
+#### Web
+
+```bash
+# Ejecutar en Chrome
+flutter run -d chrome
+```
+
+
+
 ## Preguntas Obligatorias para el README
 
 ### 1. Arquitectura y escalabilidad
@@ -142,27 +199,27 @@ Utilicé **Conventional Commits** con prefijos feat, refactor, test, feature.
 ### 9. Pendientes
 **¿Qué dejaste fuera? Lista priorizada (top 3-5) con cómo lo implementarías.**
 
-1. **Tests de Repository y Cubits** (alta prioridad)
+1. **Tests de Repository y Cubits** 
    - **Qué:** Tests unitarios para `PokemonRepositoryImpl` y `PokemonListCubit`/`PokemonDetailCubit`
    - **Cómo:** Usar `mocktail` para mockear datasources, verificar emisiones de Stream con `expectLater`, testear todos los estados del Cubit
    - **Por qué:** Asegura que la lógica de negocio y orquestación funciona correctamente
 
-2. **Internacionalización (i18n)** (media prioridad)
+2. **Internacionalización (i18n)**
    - **Qué:** Soporte multiidioma con `flutter_localizations` y archivos `.arb`
    - **Cómo:** Crear `lib/l10n/app_en.arb` y `app_es.arb`, usar `AppLocalizations.of(context)` en widgets
    - **Por qué:** Textos hardcodeados dificultan escalabilidad internacional
 
-3. **Scroll restoration en Web** (media prioridad)
+3. **Scroll restoration en Web**
    - **Qué:** Restaurar posición del scroll al volver de la página de detalle
    - **Cómo:** Guardar `ScrollController.offset` en el Cubit, restaurar en `initState` con `WidgetsBinding.instance.addPostFrameCallback`
    - **Por qué:** Mejora UX en navegación Web (comportamiento esperado en apps nativas)
 
-4. **Caché de imágenes offline** (baja prioridad)
+4. **Caché de imágenes offline**
    - **Qué:** Persistir imágenes localmente para modo offline completo
    - **Cómo:** Usar `cached_network_image` con `CacheManager` personalizado
    - **Por qué:** Actualmente las imágenes requieren conexión incluso con datos cacheados
 
-5. **Paginación infinita optimizada** (baja prioridad)
+5. **Paginación infinita optimizada**
    - **Qué:** Virtualización de lista para mejor performance con miles de Pokémon
    - **Cómo:** Implementar `ListView.builder` con `ScrollController` que detecte scroll al 80% y cargue siguiente página
    - **Por qué:** Mejora performance y reduce uso de memoria en listas largas
